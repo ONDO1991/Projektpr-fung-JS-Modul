@@ -6,24 +6,24 @@ Hier ein paar Beispiele:
 
 ## The Cashier Problem
 
--  [Info](./cashier)
+-  [Info](./cashier/)
 
 ## Pokemon Lite
 
--  Blah
+-  [Info](./pokemon/)
 
 ## Calculator
 
--  Blah
+-  [Info](./calculator/)
 
 ## Object-String Project
 
--  Blah
+-  [Info](./bulls_and_cows/)
 
 ## Bulls and Cows
 
--  Blah
+-  [Info](./bulls_and_cows/)
 
 ## Shrugman
 
--  Blah
+-  [Info](./shrugman/)
