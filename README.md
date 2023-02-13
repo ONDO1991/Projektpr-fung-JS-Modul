@@ -6,7 +6,7 @@ Hier ein paar Beispiele:
 
 ## The Cashier Problem
 
--  Blah
+-  [Info](./cashier)
 
 ## Pokemon Lite
 
