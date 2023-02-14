@@ -23,10 +23,10 @@ Hier ein paar Beispiele für Projekte, wenn euch nichts selbst einfällt. In Kla
 
 -  [Info](./object_string/)
 
-## Bulls and Cows (3,5 Tage)
+## Bulls and Cows (3,5 Tage) - Teamaufgabe
 
 -  [Info](./bulls_and_cows/)
 
-## Shrugman (3,5 Tage)
+## Shrugman (3,5 Tage) - Teamaufgabe
 
 -  [Info](./shrugman/)
