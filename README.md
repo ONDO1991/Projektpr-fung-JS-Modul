@@ -5,28 +5,28 @@
 
 (Hier kommen später allgemeine Informationen zum Workshop.)
 
-Hier ein paar Beispiele für Projekte, wenn euch nichts selbst einfällt:
+Hier ein paar Beispiele für Projekte, wenn euch nichts selbst einfällt. In Klammern jeweils die geschätze Arbeitszeit.
 
-## The Cashier Problem
+## The Cashier Problem (2 Tage)
 
 -  [Info](./cashier/)
 
-## Pokemon Lite
+## Pokemon Lite (2 Tage)
 
 -  [Info](./pokemon/)
 
-## Calculator
+## Calculator (1 Tag)
 
 -  [Info](./calculator/)
 
-## Object-String Project
+## Object-String Project (2 Tage)
 
 -  [Info](./object_string/)
 
-## Bulls and Cows
+## Bulls and Cows (3,5 Tage)
 
 -  [Info](./bulls_and_cows/)
 
-## Shrugman
+## Shrugman (3,5 Tage)
 
 -  [Info](./shrugman/)
