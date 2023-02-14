@@ -21,7 +21,7 @@ Hier ein paar Beispiele für Projekte, wenn euch nichts selbst einfällt:
 
 ## Object-String Project
 
--  [Info](./bulls_and_cows/)
+-  [Info](./object_string/)
 
 ## Bulls and Cows
 
