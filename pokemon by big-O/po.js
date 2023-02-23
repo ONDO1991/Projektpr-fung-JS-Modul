@@ -143,9 +143,8 @@ async function startBattle(playerPokemon, opponentPokemon) {
   console.log(`Ein wildes ${opponentPokemon.name} taucht auf!`);
   console.log(`${playerPokemon.name}, ich wähle dich! Los geht's!`);
   while (true) {
-
     // Spieler wählt Attacke
-    const playerAttackIndex = await chooseAttack(playerPokemon, readline);
+    const playerAttackIndex = await chooseAttack(playerPokemon);
     const playerAttack = playerPokemon.attacks[playerAttackIndex];
 
     // Gegner wählt Attacke
@@ -158,21 +157,26 @@ async function startBattle(playerPokemon, opponentPokemon) {
 
     // Reduziere Energie
     playerPokemon.energy -= playerAttack.energyCost;
-    
+
     opponentPokemon.energy -= opponentAttack.energyCost;
 
+    // Reduziere Lebenspunkte
+    playerPokemon.hp -= opponentDamage;
+
+    if (playerPokemon.hp <= 0) {
+      console.log(
+        `${playerName} hat verloren. ${playerName} fällt in Ohnmacht...`
+      );
+      readline.close();
+      break;
+    }
     // Zeige Kampf-Log
     console.log(
       `${playerPokemon.name} setzt ${playerAttack.name} ein und verursacht ${playerDamage} Schaden!`
     );
-    console.log(
-      `${opponentPokemon.name} setzt ${opponentAttack.name} ein und verursacht ${opponentDamage} Schaden!`
-    );
-    // Reduziere Lebenspunkte
-    playerPokemon.hp -= opponentDamage;
+
     opponentPokemon.hp -= playerDamage;
-    
-    
+
     //Wenn ein Pokémon keine Lebenspunkte mehr hat, wird der Kampf beendet, und es wird angezeigt, wer gewonnen hat.
     // Prüfe, ob der Kampf vorbei ist
     //Wenn der Spieler gewinnt, erhält sein Pokémon Erfahrungspunkte, die es ihm ermöglichen, aufzusteigen und stärker zu werden.
@@ -190,22 +194,21 @@ async function startBattle(playerPokemon, opponentPokemon) {
           attack.damage += random(5, 10);
           attack.energyCost -= random(0, 1);
         });
+
         console.log(
           `${playerPokemon.name} steigt auf Level ${playerPokemon.level} auf!`
         );
       }
       readline.close();
       break;
-    } else if (playerPokemon.hp <= 0) {
-      console.log(
-        `${playerName} hat verloren. ${playerName} fällt in Ohnmacht...`
-      );
-      readline.close();
-      break;
     }
-    // Zeige Status der Pokémon
+    // Zeige Kampf-Log an diesr stelle weil sonst in der konsole der gegner angreift nachdem er schon unter 0 ist.
     console.log(
-      `${playerName.name}: HP: ${playerPokemon.hp} , Energie: ${playerPokemon.energy} `
+      `${opponentPokemon.name} setzt ${opponentAttack.name} ein und verursacht ${opponentDamage} Schaden!`
+    );
+    // Zeige Status der Pokémon erst nach 
+    console.log(
+      `${playerPokemon.name}: HP: ${playerPokemon.hp} , Energie: ${playerPokemon.energy} `
     );
     console.log(
       `${opponentPokemon.name}: HP: ${opponentPokemon.hp}, Energie: ${opponentPokemon.energy} `
@@ -214,19 +217,18 @@ async function startBattle(playerPokemon, opponentPokemon) {
   }
 }
 
+
+//promise aus dem deutschen wort versprechen kann auch so verstanden werden. die funktion gibt ein versprechen ab dass es die funktion auführen wird wenn eine andere condition erfüllt wird.
+//damit zusammenhängend ist auch await da dieser darauf wartet, dass promise zurückgegeben wird.
 function chooseAttack(pokemon) {
+  let attackIndex;
   console.log(`Welche Attacke möchtest du mit ${pokemon.name} einsetzen?`);
   pokemon.attacks.forEach((attack, index) => {
     console.log(`${index + 1}. ${attack.name}`);
   });
   return new Promise((resolve) => {
-    const readlines = require("readline").createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-    readlines.question("Wähle eine Attacke: ", (index) => {
-      const attackIndex = parseInt(index) - 1;
-      readlines.close();
+    readline.question("Wähle eine Attacke: ", (index) => {
+      attackIndex = parseInt(index) - 1;
       resolve(attackIndex);
     });
   });
