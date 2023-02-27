@@ -7,6 +7,7 @@ console.log("2. Spiel beenden");
 
 // Abschnitt 2:
 // In diesem Abschnitt wird die readline-Bibliothek importiert und konfiguriert, um die Benutzereingabe aus dem Terminal zu lesen und Ausgaben auf dem Terminal anzuzeigen.
+
 const readline = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -17,15 +18,16 @@ const readline = require("readline").createInterface({
 
 let playerName = "";
 
-
 // Abschnitt 4:
 // Dieser Abschnitt liest die Benutzereingabe ein und überprüft, welche Option ausgewählt wurde. Wenn der Spieler Option 1 ausgewählt hat, wird der Spielverlauf gestartet, andernfalls wird das Spiel beendet.
+
 readline.question("Wähle eine Option: ", (option) => {
   if (option === "1") {
     console.log("Spiel wird gestartet...");
     console.log("Willkommen in der wundersamen Welt der Pokémon!");
 
     //Wenn Option 1 ausgewählt wurde, wird der Spieler aufgefordert, seinen Namen einzugeben.
+
     readline.question("Wie lautet dein Name, Trainer? ", (name) => {
       playerName = name;
       console.log(
@@ -33,6 +35,7 @@ readline.question("Wähle eine Option: ", (option) => {
       );
 
       //Sobald der Spieler seinen Namen eingegeben hat, wird er in der Begrüßungsnachricht des Spiels begrüßt und aufgefordert, ein Pokémon auszuwählen.
+
       console.log("Wähle ein Pokémon:");
       pokemonList.forEach((pokemon, index) => {
         console.log(
@@ -66,6 +69,7 @@ readline.question("Wähle eine Option: ", (option) => {
 
 // Abschnitt 5:
 // In diesem Abschnitt wird eine Liste der verfügbaren Pokémon definiert.
+
 const pokemonList = [
   {
     name: "Pikachu",
@@ -134,51 +138,56 @@ const pokemonList = [
   },
 ];
 
-
 // Abschnitt 6:
 // Dieser Abschnitt definiert eine Funktion, die eine zufällige Zahl zwischen min und max (einschließlich min und max) generiert.
 
 // dient dazu, eine zufällige Zahl zwischen einem gegebenen Minimum (min) und einem gegebenen Maximum (max) zu generieren. In diesem Code wird diese Funktion verwendet, um zufällig ein Gegner-Pokémon aus der Liste der verfügbaren Pokémon auszuwählen.
+
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-//Die ausgewählten Pokémon werden dann in einen Kampf gestartet, wobei die Funktion startBattle aufgerufen wird.
-
-//Innerhalb der startBattle-Funktion wird das ausgewählte Pokémon des Spielers gegen ein zufälliges Pokémon des Gegners eingesetzt. Der Kampf wird in einer Schleife durchgeführt, bis einer der Teilnehmer keine Lebenspunkte mehr hat.
-
-//In jeder Runde des Kampfes wird der Spieler aufgefordert, eine Angriffsaktion auszuwählen, die dann gegen den Gegner ausgeführt wird. Der Gegner wählt ebenfalls eine Angriffsaktion aus und führt diese gegen den Spieler aus. Der Schaden wird berechnet und die Lebenspunkte der Pokémon werden reduziert.
-
-//Nach jedem Angriff wird der Status der Pokémon (HP und Energie) ausgegeben.
-
 // Abschnitt 8:
 // Dieser Abschnitt enthält die startBattle-Funktion, die den eigentlichen Spielverlauf enthält. async wird verwendet, um eine asynchrone Funktion zu definieren, die mit dem Schlüsselwort await auf asynchrone Aktionen warten kann.
 
-// Insgesamt wird async und await verwendet, um asynchrone Aktionen im Code zu handhaben, wie z.B. Benutzereingaben oder das Warten auf eine gewisse Zeit, bevor eine weitere Aktion ausgeführt wird. Async und await ermöglichen es, Code auf eine einfache und leserliche Weise zu schreiben, ohne dass es notwendig ist, komplizierte Callback-Funktionen zu nutzen.
-
 async function startBattle(playerPokemon, opponentPokemon) {
+
+  //Die ausgewählten Pokémon werden dann in einen Kampf gestartet, wobei die Funktion startBattle aufgerufen wird.
+
+  //Innerhalb der startBattle-Funktion wird das ausgewählte Pokémon des Spielers gegen ein zufälliges Pokémon des Gegners eingesetzt. Der Kampf wird in einer Schleife durchgeführt, bis einer der Teilnehmer keine Lebenspunkte mehr hat.
+
   console.log(`Ein wildes ${opponentPokemon.name} taucht auf!`);
   console.log(`${playerPokemon.name}, ich wähle dich! Los geht's!`);
   while (true) {
+
     // Spieler wählt Attacke
+
     const playerAttackIndex = await chooseAttack(playerPokemon);
     const playerAttack = playerPokemon.attacks[playerAttackIndex];
 
     // Gegner wählt Attacke
+
     const opponentAttack =
       opponentPokemon.attacks[random(0, opponentPokemon.attacks.length - 1)];
 
     // Berechne Schaden
+
     const playerDamage = playerAttack.damage;
     const opponentDamage = opponentAttack.damage;
 
     // Reduziere Energie
+
     playerPokemon.energy -= playerAttack.energyCost;
 
     opponentPokemon.energy -= opponentAttack.energyCost;
 
+    //Nach jedem Angriff wird der Status der Pokémon (HP und Energie) ausgegeben.
+
     // Reduziere Lebenspunkte
+
     playerPokemon.hp -= opponentDamage;
+
+    //gibt eine nachricht aus, dass das spiel verloren ist, sobald die lebenspunkte unter null fallen.
 
     if (playerPokemon.hp <= 0) {
       console.log(
@@ -188,6 +197,7 @@ async function startBattle(playerPokemon, opponentPokemon) {
       break;
     }
     // Zeige Kampf-Log
+
     console.log(
       `${playerPokemon.name} setzt ${playerAttack.name} ein und verursacht ${playerDamage} Schaden!`
     );
@@ -195,9 +205,11 @@ async function startBattle(playerPokemon, opponentPokemon) {
     opponentPokemon.hp -= playerDamage;
 
     //Wenn ein Pokémon keine Lebenspunkte mehr hat, wird der Kampf beendet, und es wird angezeigt, wer gewonnen hat.
+
     // Prüfe, ob der Kampf vorbei ist
     //Wenn der Spieler gewinnt, erhält sein Pokémon Erfahrungspunkte, die es ihm ermöglichen, aufzusteigen und stärker zu werden.
     //Wenn das Spiel beendet wird, wird das readline-Objekt geschlossen.
+
     if (opponentPokemon.hp <= 0) {
       console.log(`Du hast den Kampf gewonnen!`);
 
@@ -223,11 +235,14 @@ async function startBattle(playerPokemon, opponentPokemon) {
       readline.close();
       break;
     }
+
     // Zeige Kampf-Log an diesr stelle weil sonst in der konsole der gegner angreift nachdem er schon unter 0 ist.
+
     console.log(
       `${opponentPokemon.name} setzt ${opponentAttack.name} ein und verursacht ${opponentDamage} Schaden!`
     );
-    // Zeige Status der Pokémon erst nach
+    // Zeige Status der Pokémon
+
     console.log(
       `${playerPokemon.name}: HP: ${playerPokemon.hp} , Energie: ${playerPokemon.energy} `
     );
@@ -239,8 +254,13 @@ async function startBattle(playerPokemon, opponentPokemon) {
 }
 
 //promise aus dem deutschen wort versprechen kann auch so verstanden werden. die funktion gibt ein versprechen ab dass es die funktion auführen wird wenn eine andere condition erfüllt wird.
+
 //damit zusammenhängend ist auch await da dieser darauf wartet, dass promise zurückgegeben wird.
+
 function chooseAttack(pokemon) {
+
+  //In jeder Runde des Kampfes wird der Spieler aufgefordert, eine Angriffsaktion auszuwählen, die dann gegen den Gegner ausgeführt wird. Der Gegner wählt ebenfalls eine Angriffsaktion aus und führt diese gegen den Spieler aus. Der Schaden wird berechnet und die Lebenspunkte der Pokémon werden reduziert.
+
   let attackIndex;
   console.log(`Welche Attacke möchtest du mit ${pokemon.name} einsetzen?`);
   pokemon.attacks.forEach((attack, index) => {
@@ -254,6 +274,10 @@ function chooseAttack(pokemon) {
   });
 }
 
+// Insgesamt wird async und await verwendet, um asynchrone Aktionen im Code zu handhaben, wie z.B. Benutzereingaben oder das Warten auf eine gewisse Zeit, bevor eine weitere Aktion ausgeführt wird. Async und await ermöglichen es, Code auf eine einfache und leserliche Weise zu schreiben, ohne dass es notwendig ist, komplizierte Callback-Funktionen zu nutzen.
+
+
+//=====================================================
 //der code unten ist nur zu erklärungszwecken thema aync, await und promise
 
 
