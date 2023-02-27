@@ -1,19 +1,25 @@
-//Zunächst werden zwei Textzeilen ausgegeben, um das Spiel zu begrüßen und dem Benutzer Optionen zu geben.
+// Abschnitt 1:
+// Dieser Abschnitt gibt eine Willkommensnachricht aus und zeigt dem Benutzer Optionen an, zwischen denen er auswählen kann.
 
 console.log("Willkommen zum Pokémon-Spiel!");
 console.log("1. Spiel starten");
 console.log("2. Spiel beenden");
 
-//Die readline-Bibliothek wird importiert und konfiguriert, um die Benutzereingabe vom Terminal zu lesen und die Ausgabe auf dem Terminal anzuzeigen.
+// Abschnitt 2:
+// In diesem Abschnitt wird die readline-Bibliothek importiert und konfiguriert, um die Benutzereingabe aus dem Terminal zu lesen und Ausgaben auf dem Terminal anzuzeigen.
 const readline = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-//Es wird eine leere Zeichenfolge playerName initialisiert, die später verwendet wird, um den Namen des Spielers zu speichern.
+// Abschnitt 3:
+// In diesem Abschnitt wird eine leere Zeichenfolge playerName initialisiert, die später verwendet wird, um den Namen des Spielers zu speichern.
+
 let playerName = "";
 
-//Die Benutzereingabe wird gelesen und überprüft, welche Option gewählt wurde. Wenn der Spieler Option 1 gewählt hat, wird der Spielverlauf gestartet, andernfalls wird das Spiel beendet.
+
+// Abschnitt 4:
+// Dieser Abschnitt liest die Benutzereingabe ein und überprüft, welche Option ausgewählt wurde. Wenn der Spieler Option 1 ausgewählt hat, wird der Spielverlauf gestartet, andernfalls wird das Spiel beendet.
 readline.question("Wähle eine Option: ", (option) => {
   if (option === "1") {
     console.log("Spiel wird gestartet...");
@@ -58,7 +64,8 @@ readline.question("Wähle eine Option: ", (option) => {
   }
 });
 
-//Die Liste der verfügbaren Pokémon wird ausgegeben und der Benutzer wird aufgefordert, eine Auswahl zu treffen.
+// Abschnitt 5:
+// In diesem Abschnitt wird eine Liste der verfügbaren Pokémon definiert.
 const pokemonList = [
   {
     name: "Pikachu",
@@ -127,7 +134,11 @@ const pokemonList = [
   },
 ];
 
-// Funktion, um eine zufällige Zahl zwischen min und max (einschließlich min und max) zu generieren
+
+// Abschnitt 6:
+// Dieser Abschnitt definiert eine Funktion, die eine zufällige Zahl zwischen min und max (einschließlich min und max) generiert.
+
+// dient dazu, eine zufällige Zahl zwischen einem gegebenen Minimum (min) und einem gegebenen Maximum (max) zu generieren. In diesem Code wird diese Funktion verwendet, um zufällig ein Gegner-Pokémon aus der Liste der verfügbaren Pokémon auszuwählen.
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -139,6 +150,12 @@ function random(min, max) {
 //In jeder Runde des Kampfes wird der Spieler aufgefordert, eine Angriffsaktion auszuwählen, die dann gegen den Gegner ausgeführt wird. Der Gegner wählt ebenfalls eine Angriffsaktion aus und führt diese gegen den Spieler aus. Der Schaden wird berechnet und die Lebenspunkte der Pokémon werden reduziert.
 
 //Nach jedem Angriff wird der Status der Pokémon (HP und Energie) ausgegeben.
+
+// Abschnitt 8:
+// Dieser Abschnitt enthält die startBattle-Funktion, die den eigentlichen Spielverlauf enthält. async wird verwendet, um eine asynchrone Funktion zu definieren, die mit dem Schlüsselwort await auf asynchrone Aktionen warten kann.
+
+// Insgesamt wird async und await verwendet, um asynchrone Aktionen im Code zu handhaben, wie z.B. Benutzereingaben oder das Warten auf eine gewisse Zeit, bevor eine weitere Aktion ausgeführt wird. Async und await ermöglichen es, Code auf eine einfache und leserliche Weise zu schreiben, ohne dass es notwendig ist, komplizierte Callback-Funktionen zu nutzen.
+
 async function startBattle(playerPokemon, opponentPokemon) {
   console.log(`Ein wildes ${opponentPokemon.name} taucht auf!`);
   console.log(`${playerPokemon.name}, ich wähle dich! Los geht's!`);
@@ -183,9 +200,13 @@ async function startBattle(playerPokemon, opponentPokemon) {
     //Wenn das Spiel beendet wird, wird das readline-Objekt geschlossen.
     if (opponentPokemon.hp <= 0) {
       console.log(`Du hast den Kampf gewonnen!`);
+
       const exp = random(5, 10);
+
       console.log(`${playerPokemon.name} erhält ${exp} Erfahrungspunkte!`);
+
       playerPokemon.exp += exp;
+
       if (playerPokemon.exp >= 100) {
         playerPokemon.level++;
         playerPokemon.hp += random(5, 10);
@@ -206,7 +227,7 @@ async function startBattle(playerPokemon, opponentPokemon) {
     console.log(
       `${opponentPokemon.name} setzt ${opponentAttack.name} ein und verursacht ${opponentDamage} Schaden!`
     );
-    // Zeige Status der Pokémon erst nach 
+    // Zeige Status der Pokémon erst nach
     console.log(
       `${playerPokemon.name}: HP: ${playerPokemon.hp} , Energie: ${playerPokemon.energy} `
     );
@@ -216,7 +237,6 @@ async function startBattle(playerPokemon, opponentPokemon) {
     console.log();
   }
 }
-
 
 //promise aus dem deutschen wort versprechen kann auch so verstanden werden. die funktion gibt ein versprechen ab dass es die funktion auführen wird wenn eine andere condition erfüllt wird.
 //damit zusammenhängend ist auch await da dieser darauf wartet, dass promise zurückgegeben wird.
@@ -233,3 +253,63 @@ function chooseAttack(pokemon) {
     });
   });
 }
+
+//der code unten ist nur zu erklärungszwecken thema aync, await und promise
+
+
+//Ohne async / await
+// const delay = seconds => {
+// 	return new Promise (
+// 		resolve => setTimeout (resolve, seconds * 1000)
+// 	)
+// };
+
+//ohne async / await
+// const countToFive = () => {
+// 	console.log ("0 Sekunden");
+// 	count.textContent = "0";
+// 	 delay (1);
+// 	console.log ("1 Sekunde");
+// 	count.textContent = "1";
+// 	 delay (1);
+// 	console.log ("2 Sekunden");
+// 	count.textContent = "2";
+// 	 delay (3);
+// 	console.log ("5 Sekunden");
+// 	count.textContent = "5";
+// }
+// button.addEventListener ("click", () => {
+// 	countToFive ();
+// })
+
+//mit async und await
+
+// const delay = seconds => {
+// 	return new Promise (
+// 		resolve => setTimeout (resolve, seconds * 1000)
+// 	)
+// };
+
+// const countToFive = async () => {
+// 	console.log ("0 Sekunden");
+// 	count.textContent = "0";
+// 	await delay (1);
+// 	console.log ("1 Sekunde");
+// 	count.textContent = "1";
+// 	await delay (1);
+// 	console.log ("2 Sekunden");
+// 	count.textContent = "2";
+// 	await delay (3);
+// 	console.log ("5 Sekunden");
+// 	count.textContent = "5";
+// }
+// button.addEventListener ("click", () => {
+// 	countToFive ();
+// })
+
+// Wenn setTimeout nicht wartet
+// Wenn wir einen Timeout einsetzen, stellen wir uns einen einfachen Ablauf vor. Ein Counter soll jeweils mit einem delay von einer Sekunde bis 5 zählen, dabei nach der "2" eine Pause (delay) von drei Sekunden einlegen.
+
+// Mit dem scheinbar gut verständlichen linearen Script funktioniert der Counter nicht so, wie wir uns das vorstellen: Der Zähler spring sofort auf 5: setTimeout läuft asynchron, die Zeilen unter den Aufrufen von delay werden sofort ausgeführt.
+
+// Das zweite Script mit den Aufrufen von async und await ist genauso linear geschrieben wie die erste Fassung. Der Unterschied liegt in await delay. Statt mit der nächsten Zeile fortzufahren, wartet das Script mit await auf die Ausführung des Requests und führt erst dann die nächste Anweisung aus.
